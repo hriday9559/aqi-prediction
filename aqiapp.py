@@ -1,0 +1,16 @@
+import streamlit as st
+import joblib
+import numpy as np
+
+# Load the model
+model = joblib.load("aqi_model.pkl")
+
+st.title("🌫️ Air Quality Index (AQI) Prediction App")
+
+pm25 = st.number_input("Enter PM2.5", min_value=0.0, step=1.0)
+pm10 = st.number_input("Enter PM10", min_value=0.0, step=1.0)
+
+if st.button("Predict AQI"):
+    data = np.array([[pm25, pm10]])
+    result = model.predict(data)[0]
+    st.success(f"Predicted AQI: {result}")
